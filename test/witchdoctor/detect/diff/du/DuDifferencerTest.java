@@ -1,0 +1,14 @@
+package witchdoctor.detect.diff.du;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class DuDifferencerTest {
+
+	@Test
+	public void test() {
+		//fail("Not yet implemented");
+	}
+
+}
