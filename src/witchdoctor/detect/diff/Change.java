@@ -1,6 +1,6 @@
 package witchdoctor.detect.diff;
 
-import witchdoctor.utils.TextChunk;
+import witchdoctor.detect.diff.TextChunk;
 
 public interface Change {
 	
