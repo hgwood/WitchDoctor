@@ -14,6 +14,8 @@ import difflib.InsertDelta;
 
 public class DuUtils {
 	
+	private DuUtils() {} // Hiding constructor of utility class.
+	
 	public static boolean isDelete(Delta delta) {
 		String revisedText = getText(delta.getRevised());
 		return StringUtils.isBlank(revisedText);

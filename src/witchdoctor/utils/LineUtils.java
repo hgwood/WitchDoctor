@@ -5,6 +5,8 @@ import java.util.List;
 
 public class LineUtils {
 	
+	private LineUtils() {} // Hiding constructor of utility class.
+	
 	public static List<String> toLines(String str) {
 		return Arrays.asList(org.apache.commons.lang3.StringUtils.split(str, "\n"));
 	}
