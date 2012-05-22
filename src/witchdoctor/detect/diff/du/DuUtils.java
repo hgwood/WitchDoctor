@@ -12,7 +12,7 @@ import difflib.DeleteDelta;
 import difflib.Delta;
 import difflib.InsertDelta;
 
-public class DuUtils {
+public final class DuUtils {
 	
 	private DuUtils() {} // Hiding constructor of utility class.
 	

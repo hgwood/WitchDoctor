@@ -3,7 +3,7 @@ package witchdoctor.utils;
 import java.util.Arrays;
 import java.util.List;
 
-public class LineUtils {
+public final class LineUtils {
 	
 	private LineUtils() {} // Hiding constructor of utility class.
 	
