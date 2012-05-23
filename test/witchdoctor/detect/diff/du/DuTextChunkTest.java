@@ -2,7 +2,11 @@ package witchdoctor.detect.diff.du;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import org.junit.Test;
+
+import com.google.common.collect.ImmutableList;
 
 import witchdoctor.detect.diff.du.mock.ChunkMock;
 import difflib.Chunk;
@@ -10,14 +14,13 @@ import difflib.Chunk;
 public class DuTextChunkTest {
 
 	@Test
-	public void test() {
-		String code = "some code";
-		String[] codeLines = code.split("\\n");
-		Chunk chunk = new ChunkMock(codeLines);
+	public void instanciation() {
+		List<String> lines = ImmutableList.of("some code");
+		Chunk chunk = new ChunkMock(lines);
 		DuTextChunk instance = new DuTextChunk(chunk);
-		assertEquals(0, instance.getPosition().getStart());
-		assertEquals(codeLines.length, instance.getPosition().getLength());
-		assertEquals(code, instance.getText());
+		assertEquals(chunk.getPosition(), instance.getPosition().getStart());
+		assertEquals(lines.size(), instance.getPosition().getLength());
+		assertEquals(lines.get(0), instance.getText());
 	}
 
 }

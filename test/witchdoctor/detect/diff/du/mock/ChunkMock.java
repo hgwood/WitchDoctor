@@ -1,26 +1,24 @@
 package witchdoctor.detect.diff.du.mock;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
 
 import difflib.Chunk;
 import difflib.PatchFailedException;
 
 public class ChunkMock extends Chunk {
 	
-	private final String text;
-	
+	private static final int position = 0;
+	private final List<String> lines;
+
 	public ChunkMock(String line) {
-		super(0, Collections.singletonList(line));
-		this.text = line;
+		super(position, Collections.EMPTY_LIST);
+		this.lines = Collections.singletonList(line);
 	}
 	
-	public ChunkMock(String[] lines) {
-		super(0, Arrays.asList(lines));
-		this.text = StringUtils.join(lines, "\n");
+	public ChunkMock(List<String> lines) {
+		super(position, Collections.EMPTY_LIST);
+		this.lines = lines;
 	}
 	
 	@Override
@@ -28,25 +26,25 @@ public class ChunkMock extends Chunk {
 		throw new UnsupportedOperationException();
 	}
 	
-	/*@Override
+	@Override
 	public int getPosition() {
-		throw new UnsupportedOperationException();
-    }*/
+		return position;
+    }
 	
 	@Override
 	public void setLines(List<?> lines) {
 		throw new UnsupportedOperationException();
     }
 	
-	/*@Override
+	@Override
 	public List<?> getLines() {
-		throw new UnsupportedOperationException();
+		return lines;
     }
 	
 	@Override
 	public int size() {
-		throw new UnsupportedOperationException();
-    }*/
+		return lines.size();
+    }
 	
 	@Override
     public int hashCode() {
@@ -62,9 +60,5 @@ public class ChunkMock extends Chunk {
     public String toString() {
     	throw new UnsupportedOperationException();
     }
-	
-	public String getText() {
-		return text;
-	}
 
 }

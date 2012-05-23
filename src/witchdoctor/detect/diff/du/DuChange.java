@@ -1,9 +1,8 @@
 package witchdoctor.detect.diff.du;
 
-import org.apache.commons.lang3.StringUtils;
-
 import witchdoctor.detect.diff.Change;
 import witchdoctor.detect.diff.TextChunk;
+import witchdoctor.utils.LineUtils;
 import difflib.Delta;
 
 public class DuChange implements Change {
@@ -19,11 +18,11 @@ public class DuChange implements Change {
 	}
 	
 	public boolean isInsert() {
-		return StringUtils.isBlank(original.getText());
+		return LineUtils.isBlank(original.getText());
 	}
 	
 	public boolean isDelete() {
-		return StringUtils.isBlank(revised.getText());
+		return LineUtils.isBlank(revised.getText());
 	}
 	
 	public boolean isUpdate() {

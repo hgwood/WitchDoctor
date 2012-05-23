@@ -1,5 +1,6 @@
 package witchdoctor.detect.diff.du.mock;
 
+import java.util.Collections;
 import java.util.List;
 
 import difflib.Chunk;
@@ -9,30 +10,36 @@ import difflib.PatchFailedException;
 public class DeltaMock extends Delta {
 	
 	public static Delta newDeletion(String original) {
-		return new DeltaMock(new String[] { original }, new String[] {});
+		return new DeltaMock(
+			Collections.singletonList(original), 
+			Collections.<String>emptyList());
 	}
 	
-	public static Delta newDeletion(String[] original) {
-		return new DeltaMock(original, new String[] {});
+	public static Delta newDeletion(List<String> original) {
+		return new DeltaMock(original, Collections.<String>emptyList());
 	}
 	
 	public static Delta newInsertion(String revised) {
-		return new DeltaMock(new String[] {}, new String[] { revised });
+		return new DeltaMock(
+			Collections.<String>emptyList(), 
+			Collections.singletonList(revised));
 	}
 	
-	public static Delta newInsertion(String[] revised) {
-		return new DeltaMock(new String[] {}, revised);
+	public static Delta newInsertion(List<String> revised) {
+		return new DeltaMock(Collections.<String>emptyList(), revised);
 	}
 	
 	public static Delta newUpdate(String original, String revised) {
-		return new DeltaMock(new String[] { original }, new String[] { revised });
+		return new DeltaMock(
+			Collections.singletonList(original), 
+			Collections.singletonList(revised));
 	}
 	
-	public static Delta newUpdate(String[] original, String[] revised) {
+	public static Delta newUpdate(List<String> original, List<String> revised) {
 		return new DeltaMock(original, revised);
 	}
 	
-	private DeltaMock(String[] original, String[] revised) {
+	private DeltaMock(List<String> original, List<String> revised) {
 		super(new ChunkMock(original), new ChunkMock(revised));
 	}
 

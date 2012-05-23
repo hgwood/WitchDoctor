@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-
 import witchdoctor.utils.LineUtils;
 import difflib.Chunk;
 import difflib.DeleteDelta;
@@ -32,7 +30,7 @@ public final class DuUtils {
 	 */
 	public static boolean isDelete(Delta delta) {
 		String revisedText = getText(delta.getRevised());
-		return StringUtils.isBlank(revisedText);
+		return LineUtils.isBlank(revisedText);
 	}
 	
 	/**
@@ -45,7 +43,7 @@ public final class DuUtils {
 	 */
 	public static boolean isInsert(Delta delta) {
 		String originalText = getText(delta.getOriginal());
-		return StringUtils.isBlank(originalText);
+		return LineUtils.isBlank(originalText);
 	}
 	
 	/**
