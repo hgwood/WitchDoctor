@@ -1,10 +1,14 @@
 package witchdoctor.detect.diff;
 
-import witchdoctor.detect.diff.TextChunk;
+import witchdoctor.detect.diff.Chunk;
 
 public interface Change {
 	
-	TextChunk getOriginal();
-	TextChunk getRevised();
+	boolean isDeletion();
+	boolean isInsertion();
+	boolean isUpdate();
+	
+	Chunk getOriginal();
+	Chunk getRevised();
 
 }
