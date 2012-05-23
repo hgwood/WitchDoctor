@@ -4,7 +4,10 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import witchdoctor.utils.LineUtils;
+import com.google.common.base.CharMatcher;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+
 import difflib.Chunk;
 import difflib.DeleteDelta;
 import difflib.Delta;
@@ -18,6 +21,15 @@ import difflib.InsertDelta;
  */
 public final class DuUtils {
 	
+	private static class StringIsBlank implements Predicate<Object> {
+
+		@Override
+		public boolean apply(Object input) {
+			return CharMatcher.WHITESPACE.matchesAllOf(input.toString());
+		}
+		
+	}
+	
 	private DuUtils() {} // Hiding constructor of utility class.
 	
 	/**
@@ -27,10 +39,12 @@ public final class DuUtils {
 	 * Delta.TYPE.DELETE</code>, which would return false in the second case.
 	 * @param delta
 	 * @return
+	 * @throws NullPointerException if <code>delta</code> is <code>null</code>
 	 */
 	public static boolean isDelete(Delta delta) {
-		String revisedText = getText(delta.getRevised());
-		return LineUtils.isBlank(revisedText);
+		if (delta.getType() == Delta.TYPE.DELETE)
+			return true;
+		return Iterables.all(delta.getRevised().getLines(), new StringIsBlank());
 	}
 	
 	/**
@@ -40,10 +54,12 @@ public final class DuUtils {
 	 * Delta.TYPE.INSERT</code>, which would return false in the second case.
 	 * @param delta
 	 * @return
+	 * @throws NullPointerException if <code>delta</code> is <code>null</code>
 	 */
 	public static boolean isInsert(Delta delta) {
-		String originalText = getText(delta.getOriginal());
-		return LineUtils.isBlank(originalText);
+		if (delta.getType() == Delta.TYPE.INSERT)
+			return true;
+		return Iterables.all(delta.getOriginal().getLines(), new StringIsBlank());
 	}
 	
 	/**
@@ -51,6 +67,7 @@ public final class DuUtils {
 	 * only one line each.
 	 * @param delta
 	 * @return
+	 * @throws NullPointerException if <code>delta</code> is <code>null</code>
 	 */
 	public static Iterable<Delta> toOneLiners(Delta delta) {
 		List<Delta> oneLiners = new LinkedList<Delta>();
@@ -73,35 +90,16 @@ public final class DuUtils {
 	}
 	
 	/**
-	 * Returns the content of a chunk of text as a collection of lines.
-	 * @param chunk
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public static Iterable<String> getLines(Chunk chunk) {
-		return (Iterable<String>)chunk.getLines();
-	}
-	
-	/**
-	 * Retrieves the content of a chunk of text as a single string.
-	 * @param chunk
-	 * @return
-	 */
-	public static String getText(Chunk chunk) {
-		Iterable<String> lines = getLines(chunk);
-		return LineUtils.fromLines(lines);
-	}
-	
-	/**
 	 * Splits a chunk of text spanning multiple lines to multiple
 	 * chunks of text spanning only one line each.
 	 * @param chunk
 	 * @return
+	 * @throws NullPointerException if <code>chunk</code> is <code>null</code>
 	 */
 	public static Iterable<Chunk> toOneLiners(Chunk chunk) {
 		List<Chunk> oneLiners = new LinkedList<Chunk>();
 		int startPosition = chunk.getPosition();
-		for (String line : getLines(chunk)) {
+		for (Object line : chunk.getLines()) {
 			List<?> singletonLine = Collections.singletonList(line);
 			Chunk oneLiner = new Chunk(startPosition++, singletonLine);
 			oneLiners.add(oneLiner);
