@@ -1,15 +1,13 @@
 package witchdoctor.detect;
 
-public class CodeDocument {
+import java.util.List;
+
+public interface CodeDocument {
 	
-	public String getCode() {
-		// TODO implement
-		return null;
-	}
-	
-	public Iterable<CompilerMessage> getCompilerMessages() {
-		// TODO implement
-		return null;
-	}
+	/**
+	 * Returns the code of the document as an immutable list.
+	 * @return
+	 */
+	public List<String> getLines();
 
 }
