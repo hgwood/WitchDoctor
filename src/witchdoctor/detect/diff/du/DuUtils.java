@@ -13,7 +13,7 @@ import difflib.Delta;
  */
 public final class DuUtils {
 	
-	private static final Predicate<Object> stringIsBlank = new Predicate<Object>() {
+	private static final Predicate<Object> STRING_IS_BLANK = new Predicate<Object>() {
 
 		@Override
 		public boolean apply(Object input) {
@@ -34,9 +34,10 @@ public final class DuUtils {
 	 * @throws NullPointerException if <code>delta</code> is <code>null</code>
 	 */
 	public static boolean isDelete(Delta delta) {
-		if (delta.getType() == Delta.TYPE.DELETE)
+		if (delta.getType() == Delta.TYPE.DELETE) {
 			return true;
-		return Iterables.all(delta.getRevised().getLines(), stringIsBlank);
+		}
+		return Iterables.all(delta.getRevised().getLines(), STRING_IS_BLANK);
 	}
 	
 	/**
@@ -49,9 +50,10 @@ public final class DuUtils {
 	 * @throws NullPointerException if <code>delta</code> is <code>null</code>
 	 */
 	public static boolean isInsert(Delta delta) {
-		if (delta.getType() == Delta.TYPE.INSERT)
+		if (delta.getType() == Delta.TYPE.INSERT) {
 			return true;
-		return Iterables.all(delta.getOriginal().getLines(), stringIsBlank);
+		}
+		return Iterables.all(delta.getOriginal().getLines(), STRING_IS_BLANK);
 	}
 
 }

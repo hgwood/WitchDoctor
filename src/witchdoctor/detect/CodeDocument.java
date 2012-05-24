@@ -8,6 +8,6 @@ public interface CodeDocument {
 	 * Returns the code of the document as an immutable list.
 	 * @return
 	 */
-	public List<String> getLines();
+	List<String> getLines();
 
 }
