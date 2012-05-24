@@ -1,5 +1,7 @@
 package witchdoctor.detect.diff;
 
+import java.util.Collections;
+
 public class CodeUpdate extends CodeChange {
 	
 	private final CodeChunk original;
@@ -33,6 +35,11 @@ public class CodeUpdate extends CodeChange {
 	@Override
 	public CodeChunk getRevised() {
 		return revised;
+	}
+
+	@Override
+	public Iterable<? extends CodeChange> explodeLines() {
+		return Collections.singletonList(this);
 	}
 
 }

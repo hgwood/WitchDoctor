@@ -1,8 +1,12 @@
 package witchdoctor.detect.diff;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Lists;
 
 public class CodeChunk implements Chunk, Iterable<String> {
 	
@@ -31,6 +35,16 @@ public class CodeChunk implements Chunk, Iterable<String> {
 	@Override
 	public Iterator<String> iterator() {
 		return lines.iterator();
+	}
+	
+	public Iterable<CodeChunk> explodeLines() {
+		Collection<CodeChunk> subChunks = Lists.newLinkedList();
+		int currentPosition = position;
+		for (String line : lines) {
+			List<String> singleLine = Collections.singletonList(line);
+			subChunks.add(new CodeChunk(currentPosition++, singleLine));
+		}
+		return subChunks;
 	}
 
 }

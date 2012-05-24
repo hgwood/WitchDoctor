@@ -1,5 +1,8 @@
 package witchdoctor.detect.diff;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
+
 public class CodeInsertion extends CodeChange {
 	
 	private final CodeChunk code;
@@ -31,6 +34,18 @@ public class CodeInsertion extends CodeChange {
 	@Override
 	public CodeChunk getRevised() {
 		return code;
+	}
+	
+	@Override
+	public Iterable<CodeInsertion> explodeLines() {
+		return Iterables.transform(code.explodeLines(), 
+			new Function<CodeChunk, CodeInsertion>() {
+				@Override
+				public CodeInsertion apply(CodeChunk input) {
+					return new CodeInsertion(input);
+				}
+			}
+		);
 	}
 
 }

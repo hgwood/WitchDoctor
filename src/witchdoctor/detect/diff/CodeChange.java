@@ -16,4 +16,6 @@ public abstract class CodeChange implements Change {
 
 	@Override
 	public abstract CodeChunk getRevised();
+	
+	public abstract Iterable<? extends CodeChange> explodeLines();
 }

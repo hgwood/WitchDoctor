@@ -1,5 +1,8 @@
 package witchdoctor.detect.diff;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
+
 public class CodeDeletion extends CodeChange {
 	
 	private final CodeChunk code;
@@ -31,6 +34,18 @@ public class CodeDeletion extends CodeChange {
 	@Override
 	public CodeChunk getRevised() {
 		throw new UnsupportedOperationException();
+	}
+	
+	@Override
+	public Iterable<CodeDeletion> explodeLines() {
+		return Iterables.transform(code.explodeLines(), 
+			new Function<CodeChunk, CodeDeletion>() {
+				@Override
+				public CodeDeletion apply(CodeChunk input) {
+					return new CodeDeletion(input);
+				}
+			}
+		);
 	}
 
 }
