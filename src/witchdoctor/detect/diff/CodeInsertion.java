@@ -1,6 +1,6 @@
 package witchdoctor.detect.diff;
 
-public class CodeInsertion implements Change {
+public class CodeInsertion extends CodeChange {
 	
 	private final CodeChunk code;
 	

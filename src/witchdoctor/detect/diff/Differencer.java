@@ -4,6 +4,6 @@ import witchdoctor.detect.CodeDocument;
 
 public interface Differencer {
 	
-	Iterable<Change> diff(CodeDocument left, CodeDocument right);
+	Iterable<? extends Change> diff(CodeDocument left, CodeDocument right);
 
 }
