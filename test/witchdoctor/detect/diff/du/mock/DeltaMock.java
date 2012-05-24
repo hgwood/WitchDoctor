@@ -39,8 +39,16 @@ public class DeltaMock extends Delta {
 		return new DeltaMock(original, revised);
 	}
 	
+	private final TYPE type;
+	
 	private DeltaMock(List<String> original, List<String> revised) {
 		super(new ChunkMock(original), new ChunkMock(revised));
+		if (original.isEmpty())
+			this.type = TYPE.INSERT;
+		else if (revised.isEmpty())
+			this.type = TYPE.DELETE;
+		else
+			this.type = TYPE.CHANGE;
 	}
 
 	@Override
@@ -50,7 +58,7 @@ public class DeltaMock extends Delta {
 
 	@Override
 	public TYPE getType() {
-		throw new UnsupportedOperationException();
+		return type;
 	}
 
 	@Override

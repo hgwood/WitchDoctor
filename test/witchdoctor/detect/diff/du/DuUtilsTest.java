@@ -1,22 +1,52 @@
 package witchdoctor.detect.diff.du;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-import com.google.common.collect.ImmutableList;
-
-import witchdoctor.detect.diff.du.mock.ChunkMock;
 import witchdoctor.detect.diff.du.mock.DeltaMock;
-import difflib.Chunk;
 import difflib.Delta;
 
+@RunWith(Parameterized.class)
 public class DuUtilsTest {
 	
+	@Parameters
+	public static Collection<Object[]> generateData() {
+		return Arrays.asList(
+			new Object[] {"a", "a", false, false},
+			new Object[] {"a", "b", false, false},
+			new Object[] {"a", "", true, false},
+			new Object[] {"a", "\t\n\r ", true, false},
+			new Object[] {"", "a", false, true},
+			new Object[] {"\t\n\r ", "a", false, true}
+		);
+	}
+	
+	private final String original;
+	private final String revised;
+	private final boolean isDeletion;
+	private final boolean isInsertion;
+	
+	public DuUtilsTest(String original, String revised, boolean isDeletion, boolean isInsertion) {
+		this.original = original;
+		this.revised = revised;
+		this.isDeletion = isDeletion;
+		this.isInsertion = isInsertion;
+	}
+	
+	@Test
+	public void test() {
+		Delta delta = DeltaMock.newUpdate(original, revised);
+		assertEquals(DuUtils.isDelete(delta), isDeletion);
+		assertEquals(DuUtils.isInsert(delta), isInsertion);
+	}
+	/*
 	@Test
 	public void test_delete() {
 		Delta delta = DeltaMock.newUpdate("some code", "\t ");
@@ -80,5 +110,5 @@ public class DuUtilsTest {
 			i++;
 		}
 	}
-
+*/
 }
