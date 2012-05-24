@@ -25,12 +25,12 @@ public class DuDifferencer implements Differencer {
 	@Override
 	public Iterable<? extends Change> diff(CodeDocument original, CodeDocument revised) {
 		Patch patch = DiffUtils.diff(original.getLines(), revised.getLines());
-		List<CodeChange> changes = Lists.transform(patch.getDeltas(), adaptDeltaFunction);
-		Iterable<Iterable<? extends CodeChange>> exploded = Lists.transform(changes, explodeChangeFunction);
+		List<CodeChange> changes = Lists.transform(patch.getDeltas(), ADAPT_DELTA);
+		Iterable<Iterable<? extends CodeChange>> exploded = Lists.transform(changes, EXPLODE_CHANGE);
 		return Iterables.concat(exploded);
 	}
 	
-	private final Function<Delta, CodeChange> adaptDeltaFunction = 
+	private static final Function<Delta, CodeChange> ADAPT_DELTA = 
 		new Function<Delta, CodeChange>() {
 			@Override
 			public CodeChange apply(Delta input) {
@@ -38,7 +38,7 @@ public class DuDifferencer implements Differencer {
 			}
 		};
 	
-	private final Function<CodeChange, Iterable<? extends CodeChange>> explodeChangeFunction = 
+	private static final Function<CodeChange, Iterable<? extends CodeChange>> EXPLODE_CHANGE = 
 		new Function<CodeChange, Iterable<? extends CodeChange>>() {
 			@Override
 			public Iterable<? extends CodeChange> apply(CodeChange input) {
@@ -46,7 +46,7 @@ public class DuDifferencer implements Differencer {
 			}
 		};
 	
-	private CodeChange adaptDelta(Delta input) {
+	private static CodeChange adaptDelta(Delta input) {
 		CodeChunk original = adaptChunk(input.getOriginal());
 		CodeChunk revised = adaptChunk(input.getRevised());
 		if (DuUtils.isDelete(input)) {
@@ -59,7 +59,7 @@ public class DuDifferencer implements Differencer {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private CodeChunk adaptChunk(Chunk input) {
+	private static CodeChunk adaptChunk(Chunk input) {
 		return new CodeChunk(input.getPosition(), (Iterable<String>)input.getLines());
 	}
 
