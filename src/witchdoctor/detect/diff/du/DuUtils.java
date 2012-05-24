@@ -1,6 +1,5 @@
 package witchdoctor.detect.diff.du;
 
-import com.google.common.base.CharMatcher;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
@@ -18,7 +17,7 @@ public final class DuUtils {
 
 		@Override
 		public boolean apply(Object input) {
-			return CharMatcher.WHITESPACE.matchesAllOf(input.toString());
+			return input.toString().trim().isEmpty();
 		}
 		
 	};
