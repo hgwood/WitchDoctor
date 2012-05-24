@@ -1,24 +1,24 @@
-package witchdoctor.detect.diff;
+package witchdoctor.detect.diff.code;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 
-public class CodeInsertion extends CodeChange {
+public class CodeDeletion extends CodeChange {
 	
 	private final CodeChunk code;
 	
-	public CodeInsertion(CodeChunk inserted) {
-		this.code = inserted;
+	public CodeDeletion(CodeChunk deleted) {
+		this.code = deleted;
 	}
 	
 	@Override
 	public boolean isDeletion() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isInsertion() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -28,21 +28,21 @@ public class CodeInsertion extends CodeChange {
 
 	@Override
 	public CodeChunk getOriginal() {
-		throw new UnsupportedOperationException();
+		return code;
 	}
 
 	@Override
 	public CodeChunk getRevised() {
-		return code;
+		throw new UnsupportedOperationException();
 	}
 	
 	@Override
-	public Iterable<CodeInsertion> explodeLines() {
+	public Iterable<CodeDeletion> explodeLines() {
 		return Iterables.transform(code.explodeLines(), 
-			new Function<CodeChunk, CodeInsertion>() {
+			new Function<CodeChunk, CodeDeletion>() {
 				@Override
-				public CodeInsertion apply(CodeChunk input) {
-					return new CodeInsertion(input);
+				public CodeDeletion apply(CodeChunk input) {
+					return new CodeDeletion(input);
 				}
 			}
 		);

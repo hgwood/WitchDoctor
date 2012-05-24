@@ -1,4 +1,6 @@
-package witchdoctor.detect.diff;
+package witchdoctor.detect.diff.code;
+
+import witchdoctor.detect.diff.Change;
 
 public abstract class CodeChange implements Change {
 

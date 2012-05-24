@@ -1,9 +1,11 @@
-package witchdoctor.detect.diff;
+package witchdoctor.detect.diff.code;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
+import witchdoctor.detect.diff.Chunk;
 
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;

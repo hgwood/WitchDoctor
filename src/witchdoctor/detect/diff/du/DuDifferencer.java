@@ -4,12 +4,12 @@ import java.util.List;
 
 import witchdoctor.detect.CodeDocument;
 import witchdoctor.detect.diff.Change;
-import witchdoctor.detect.diff.CodeChange;
-import witchdoctor.detect.diff.CodeChunk;
-import witchdoctor.detect.diff.CodeDeletion;
-import witchdoctor.detect.diff.CodeInsertion;
-import witchdoctor.detect.diff.CodeUpdate;
 import witchdoctor.detect.diff.Differencer;
+import witchdoctor.detect.diff.code.CodeChange;
+import witchdoctor.detect.diff.code.CodeChunk;
+import witchdoctor.detect.diff.code.CodeDeletion;
+import witchdoctor.detect.diff.code.CodeInsertion;
+import witchdoctor.detect.diff.code.CodeUpdate;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;

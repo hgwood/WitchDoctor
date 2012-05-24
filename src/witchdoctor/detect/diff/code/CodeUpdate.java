@@ -1,4 +1,4 @@
-package witchdoctor.detect.diff;
+package witchdoctor.detect.diff.code;
 
 import java.util.Collections;
 
