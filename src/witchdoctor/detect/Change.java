@@ -20,6 +20,12 @@ class Change<T> implements IChange {
 		return !isDeletion();
 	}
 	
+	@Override
+	@SuppressWarnings("unchecked")
+	public T getContent() {
+		return (T)content;
+	}
+	
 	public int getPosition() {
 		return position;
 	}

@@ -17,6 +17,11 @@ public class ChangeDecorator implements IChange {
 	public boolean isInsertion() {
 		return decorated.isInsertion();
 	}
+	
+	@Override
+	public <T> T getContent() {
+		return decorated.<T>getContent();
+	}
 
 	@Override
 	public int getPosition() {
