@@ -1,43 +1,17 @@
 package witchdoctor.detect.changes;
 
-import java.util.Collections;
 import java.util.List;
+
+import witchdoctor.WitchDoctorException;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import witchdoctor.WitchDoctorException;
 import difflib.Chunk;
 import difflib.Delta;
-import difflib.InsertDelta;
-import difflib.DeleteDelta;
 import difflib.Delta.TYPE;
 
 public class ChangeFactory {
-	
-	public Iterable<Delta> explode(Iterable<Delta> deltas) {
-		List<Delta> exploded = Lists.newLinkedList();
-		for (Delta delta : deltas) {
-			switch (delta.getType()) {
-			case CHANGE:
-				Chunk emptyOriginal = new Chunk(
-					delta.getOriginal().getPosition(), 
-					Collections.EMPTY_LIST);
-				Delta ins = new InsertDelta(emptyOriginal, delta.getRevised());
-				exploded.add(ins);
-				Chunk emptyRevised = new Chunk(
-					delta.getRevised().getPosition(), 
-					Collections.EMPTY_LIST);
-				Delta del = new DeleteDelta(delta.getOriginal(), emptyRevised);
-				exploded.add(del);
-				break;
-			default:
-				exploded.add(delta);
-				break;
-			}
-		}
-		return exploded;
-	}
 	
 	@SuppressWarnings("unchecked")
 	public IMacroChange<Object> fromDiffLib(Delta delta) throws WitchDoctorException {
