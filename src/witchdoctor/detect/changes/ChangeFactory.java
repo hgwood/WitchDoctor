@@ -13,7 +13,7 @@ import difflib.InsertDelta;
 import difflib.DeleteDelta;
 import difflib.Delta.TYPE;
 
-public class Factory {
+public class ChangeFactory {
 	
 	public Iterable<Delta> explode(Iterable<Delta> deltas) {
 		List<Delta> exploded = Lists.newLinkedList();
