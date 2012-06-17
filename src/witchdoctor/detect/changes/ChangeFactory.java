@@ -2,7 +2,6 @@ package witchdoctor.detect.changes;
 
 import java.util.List;
 
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 public class ChangeFactory implements IChangeFactory {
@@ -32,14 +31,4 @@ public class ChangeFactory implements IChangeFactory {
 		return changes;
 	}
 	
-	public IChange charPosition(Iterable<String> lines, IChange change) {
-		int charPosition = 0;
-		for (int i = 0; i < change.getPosition(); i++) {
-			charPosition += Iterables.get(lines, i).length();
-		}
-		return new Reposition(change, charPosition);
-	}
-
-
-
 }
