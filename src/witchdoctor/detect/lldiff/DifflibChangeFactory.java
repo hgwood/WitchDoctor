@@ -45,16 +45,16 @@ public class DifflibChangeFactory {
 		for (Delta delta : deltas) {
 			switch (delta.getType()) {
 			case CHANGE:
-				Chunk emptyOriginal = new Chunk(
-					delta.getOriginal().getPosition(), 
-					Collections.EMPTY_LIST);
-				Delta ins = new InsertDelta(emptyOriginal, delta.getRevised());
-				cuts.add(ins);
 				Chunk emptyRevised = new Chunk(
 					delta.getRevised().getPosition(), 
 					Collections.EMPTY_LIST);
 				Delta del = new DeleteDelta(delta.getOriginal(), emptyRevised);
 				cuts.add(del);
+				Chunk emptyOriginal = new Chunk(
+					delta.getOriginal().getPosition(), 
+					Collections.EMPTY_LIST);
+				Delta ins = new InsertDelta(emptyOriginal, delta.getRevised());
+				cuts.add(ins);
 				break;
 			default:
 				cuts.add(delta);
