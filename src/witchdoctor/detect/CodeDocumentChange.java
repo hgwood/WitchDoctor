@@ -23,7 +23,7 @@ public class CodeDocumentChange extends ChangeDecorator {
 	private final CodeDocument other;
 	private final int charPosition;
 
-	private CodeDocumentChange(IChange decorated, 
+	protected CodeDocumentChange(IChange decorated, 
 			CodeDocument container, CodeDocument other, int charPosition) {
 		super(decorated);
 		this.container = container;

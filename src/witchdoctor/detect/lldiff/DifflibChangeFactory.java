@@ -12,8 +12,7 @@ public class DifflibChangeFactory {
 	@SuppressWarnings("unchecked")
 	public IMacroChange<Object> create(Delta delta, IChangeFactory factory) 
 	throws WitchDoctorException {
-		if (delta.getType() == TYPE.CHANGE)
-			throw new WitchDoctorException();
+		if (delta.getType() == TYPE.CHANGE) { throw new WitchDoctorException(); }
 		boolean isdeletion = delta.getType() == TYPE.DELETE;
 		Chunk content = isdeletion ? delta.getOriginal() : delta.getRevised();
 		return factory.createMacro(
