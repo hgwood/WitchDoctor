@@ -1,6 +1,6 @@
 package witchdoctor.detect;
 
-public class ChangeDecorator implements IChange {
+class ChangeDecorator implements IChange {
 	
 	private final IChange decorated;
 	

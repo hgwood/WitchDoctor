@@ -40,7 +40,7 @@ public class Factory {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public MacroChange<Object> fromDiffLib(Delta delta) throws WitchDoctorException {
+	public IMacroChange<Object> fromDiffLib(Delta delta) throws WitchDoctorException {
 		if (delta.getType() == TYPE.CHANGE)
 			throw new WitchDoctorException();
 		boolean isdeletion = delta.getType() == TYPE.DELETE;
@@ -48,12 +48,12 @@ public class Factory {
 		return macroChange(isdeletion, content.getPosition(), (Iterable<Object>)content.getLines());
 	}
 	
-	public <T> MacroChange<T> macroChange(boolean isdeletion, int position, Iterable<T> content) {
+	public <T> IMacroChange<T> macroChange(boolean isdeletion, int position, Iterable<T> content) {
 		IChange decorated = new Change<T>(isdeletion, position, null);
 		return new MacroChange<T>(decorated, content);
 	}
 	
-	public <T> Iterable<IChange> split(MacroChange<T> macroChange) {
+	public <T> Iterable<IChange> split(IMacroChange<T> macroChange) {
 		List<IChange> changes = Lists.newLinkedList();
 		int currentPosition = 0;
 		for (T item : macroChange) {

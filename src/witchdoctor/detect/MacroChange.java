@@ -2,7 +2,7 @@ package witchdoctor.detect;
 
 import java.util.Iterator;
 
-class MacroChange<T> extends ChangeDecorator implements Iterable<T> {
+class MacroChange<T> extends ChangeDecorator implements IMacroChange<T> {
 
 	private final Iterable<T> content;
 	
