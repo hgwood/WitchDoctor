@@ -1,4 +1,4 @@
-package witchdoctor.detect;
+package witchdoctor.detect.changes;
 
 public class Reposition extends ChangeDecorator {
 	

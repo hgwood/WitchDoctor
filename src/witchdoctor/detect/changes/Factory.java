@@ -1,4 +1,4 @@
-package witchdoctor.detect;
+package witchdoctor.detect.changes;
 
 import java.util.Collections;
 import java.util.List;

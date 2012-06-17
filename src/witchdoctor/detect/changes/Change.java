@@ -1,4 +1,4 @@
-package witchdoctor.detect;
+package witchdoctor.detect.changes;
 
 class Change<T> implements IChange {
 	

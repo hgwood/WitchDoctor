@@ -1,4 +1,4 @@
-package witchdoctor.detect;
+package witchdoctor.detect.changes;
 
 class ChangeDecorator implements IChange {
 	
