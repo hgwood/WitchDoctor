@@ -9,6 +9,18 @@ import difflib.Delta.TYPE;
 
 public class DifflibChangeFactory {
 	
+	/**
+	 * Adapts Delta object from the diffutils library to WitchDoctor's IChange
+	 * objects. Since diffutils' Deltas can contain several changes, a 
+	 * IMacroChange object is returned. Individual changes can then be 
+	 * retrieved by splitting this object using an IChangeFactory.
+	 * Deltas representing an update (type CHANGE in diffutils) cannot be 
+	 * processed by this method.
+	 * @param delta
+	 * @param factory will build IChange object from the Delta object info
+	 * @return
+	 * @throws WitchDoctorException if delta is of type CHANGE
+	 */
 	@SuppressWarnings("unchecked")
 	public IMacroChange<Object> create(Delta delta, IChangeFactory factory) 
 	throws WitchDoctorException {
