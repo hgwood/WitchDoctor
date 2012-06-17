@@ -2,36 +2,28 @@ package witchdoctor.detect.changes;
 
 import java.util.List;
 
-import witchdoctor.WitchDoctorException;
-
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import difflib.Chunk;
-import difflib.Delta;
-import difflib.Delta.TYPE;
-
-public class ChangeFactory {
+public class ChangeFactory implements IChangeFactory {
 	
-	@SuppressWarnings("unchecked")
-	public IMacroChange<Object> fromDiffLib(Delta delta) throws WitchDoctorException {
-		if (delta.getType() == TYPE.CHANGE)
-			throw new WitchDoctorException();
-		boolean isdeletion = delta.getType() == TYPE.DELETE;
-		Chunk content = isdeletion ? delta.getOriginal() : delta.getRevised();
-		return macroChange(isdeletion, content.getPosition(), (Iterable<Object>)content.getLines());
+	@Override
+	public IChange create(boolean isdeletion, int position, Object content) {
+		return new Change(isdeletion, position, content);
 	}
 	
-	public <T> IMacroChange<T> macroChange(boolean isdeletion, int position, Iterable<T> content) {
-		IChange decorated = new Change<T>(isdeletion, position, null);
+	@Override
+	public <T> IMacroChange<T> createMacro(boolean isdeletion, int position, Iterable<T> content) {
+		IChange decorated = new Change(isdeletion, position, null);
 		return new MacroChange<T>(decorated, content);
 	}
 	
+	@Override
 	public <T> Iterable<IChange> split(IMacroChange<T> macroChange) {
 		List<IChange> changes = Lists.newLinkedList();
 		int currentPosition = 0;
 		for (T item : macroChange) {
-			Change<T> change = new Change<T>(
+			IChange change = new Change(
 				macroChange.isDeletion(), 
 				currentPosition++, 
 				item);
@@ -47,5 +39,7 @@ public class ChangeFactory {
 		}
 		return new Reposition(change, charPosition);
 	}
+
+
 
 }
