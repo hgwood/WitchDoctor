@@ -12,10 +12,12 @@ class Change implements IChange {
 		this.content = content;
 	}
 	
+	@Override
 	public boolean isDeletion() {
 		return isdeletion;
 	}
 	
+	@Override
 	public final boolean isInsertion() {
 		return !isDeletion();
 	}
@@ -26,10 +28,12 @@ class Change implements IChange {
 		return (T)content;
 	}
 	
+	@Override
 	public int getPosition() {
 		return position;
 	}
 	
+	@Override
 	public String toString() {
 		String prefix = "";
 		if (isDeletion()) {
