@@ -1,8 +1,12 @@
 package witchdoctor.detect.changes;
 
-class ChangeDecorator implements IChange {
+public class ChangeDecorator implements IChange {
 	
 	private final IChange decorated;
+	
+	protected IChange decorated() {
+		return decorated;
+	}
 	
 	public ChangeDecorator(IChange decorated) {
 		this.decorated = decorated;
