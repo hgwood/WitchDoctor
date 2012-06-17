@@ -1,6 +1,6 @@
 package witchdoctor.detect.changes;
 
-class Change<T> implements IChange {
+class Change implements IChange {
 	
 	private final boolean isdeletion;
 	private final int position;
@@ -22,7 +22,7 @@ class Change<T> implements IChange {
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public T getContent() {
+	public <T> T getContent() {
 		return (T)content;
 	}
 	
