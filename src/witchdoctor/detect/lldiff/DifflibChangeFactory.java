@@ -7,6 +7,12 @@ import difflib.Chunk;
 import difflib.Delta;
 import difflib.Delta.TYPE;
 
+/**
+ * Creates WitchDoctor's IChange objects from Delta object (from the diffutils
+ * library).
+ * @author Hugo Wood
+ *
+ */
 public class DifflibChangeFactory {
 	
 	/**

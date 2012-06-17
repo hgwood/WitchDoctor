@@ -10,8 +10,19 @@ import difflib.DeleteDelta;
 import difflib.Delta;
 import difflib.InsertDelta;
 
+/**
+ * Creates objects of type Delta (from the diffutils library).
+ * @author Hugo Wood
+ *
+ */
 public class DeltaFactory {
 	
+	/**
+	 * Transforms deltas of type CHANGE into two deltas: one INSERT and one
+	 * DELETE. Other deltas are left unchanged.
+	 * @param deltas a collection of deltas of any type
+	 * @return a collection of deltas of type INSERT or DELETE
+	 */
 	public Iterable<Delta> explode(Iterable<Delta> deltas) {
 		List<Delta> exploded = Lists.newLinkedList();
 		for (Delta delta : deltas) {
