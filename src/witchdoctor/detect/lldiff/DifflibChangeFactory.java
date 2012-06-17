@@ -3,9 +3,11 @@ package witchdoctor.detect.lldiff;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import witchdoctor.WitchDoctorException;
+import witchdoctor.detect.changes.IChange;
 import witchdoctor.detect.changes.IChangeFactory;
 import witchdoctor.detect.changes.IMacroChange;
 import difflib.Chunk;
@@ -76,7 +78,9 @@ public class DifflibChangeFactory {
 	@SuppressWarnings("unchecked")
 	public IMacroChange<Object> create(Delta delta) 
 	throws WitchDoctorException {
-		if (delta.getType() == TYPE.CHANGE) { throw new WitchDoctorException(); }
+		if (delta.getType() == TYPE.CHANGE) { 
+			throw new WitchDoctorException(); 
+		}
 		boolean isdeletion = delta.getType() == TYPE.DELETE;
 		Chunk content = isdeletion ? delta.getOriginal() : delta.getRevised();
 		return changeFactory.createMacro(
@@ -92,15 +96,16 @@ public class DifflibChangeFactory {
 	 * @param deltas
 	 * @return
 	 */
-	public Iterable<IMacroChange<Object>> create(Iterable<Delta> deltas) {
-		List<IMacroChange<Object>> changes = Lists.newLinkedList();
+	public Iterable<IChange> create(Iterable<Delta> deltas) {
+		Iterable<IChange> changes = Lists.newLinkedList();
 		Iterable<Delta> cuts = cutUpdates(deltas);
-		for (Delta delta : cuts) {
-			try {
-				changes.add(create(delta));
-			} catch (WitchDoctorException e) {
-				assert false;
+		try {
+			for (Delta delta : cuts) {
+				Iterable<IChange> c = changeFactory.split(create(delta));
+				changes = Iterables.concat(changes, c);
 			}
+		} catch (WitchDoctorException e) {
+			assert false;
 		}
 		return changes;
 	}
