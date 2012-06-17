@@ -13,7 +13,7 @@ public class ChangeFactory implements IChangeFactory {
 	
 	@Override
 	public <T> IMacroChange<T> createMacro(boolean isdeletion, int position, Iterable<T> content) {
-		IChange decorated = new Change(isdeletion, position, null);
+		IChange decorated = create(isdeletion, position, null);
 		return new MacroChange<T>(decorated, content);
 	}
 	
@@ -22,7 +22,7 @@ public class ChangeFactory implements IChangeFactory {
 		List<IChange> changes = Lists.newLinkedList();
 		int currentPosition = 0;
 		for (T item : macroChange) {
-			IChange change = new Change(
+			IChange change = create(
 				macroChange.isDeletion(), 
 				currentPosition++, 
 				item);
